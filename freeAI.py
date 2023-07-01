@@ -17,6 +17,7 @@
 
 import logging
 from freeAI import aichatos
+from telethon.tl.types import Message
 
 from .. import loader, utils
 

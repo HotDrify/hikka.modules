@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------------
-# № Licensed under the GNU AGPLv3.
-# т яИ Owner of heta.hikariatama.ru doesn't take any responsibilities or intellectual property rights regarding this script
+# 🔒 Licensed under the GNU AGPLv3.
+# 🚬 Owner of heta.hikariatama.ru doesn't take any responsibilities or intellectual property rights regarding this script
 #---------------------------------------------------------------------------------
-#          лАллплплплпмлплллпплмлАлАлллмплмпмпл
-#          лпллмлАлАлмплпмллпААлАмлплллАллАллпл
-#           Licensed under the GNU AGPLv3. | https://www.gnu.org/licenses/agpl-3.0.html
+#          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
+#          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
+#          🔒 Licensed under the GNU AGPLv3. | https://www.gnu.org/licenses/agpl-3.0.html
 #                                 @HotDrify
 # requires: git+https://github.com/HotDrify/freeAI
 # scope: hikka_only

@@ -11,7 +11,7 @@
 # scope: hikka_min 1.2.10
 
 import logging
-from git+https://github.com/HotDrify/freeAI import aichatos
+from freeAI import aichatos
 
 from .. import loader, utils
 

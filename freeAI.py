@@ -18,6 +18,7 @@
 import logging
 from freeAI import aichatos
 from telethon.tl.types import Message
+# type: ignore
 
 from .. import loader, utils
 

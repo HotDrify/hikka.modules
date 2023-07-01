@@ -44,4 +44,7 @@ class AIMod(loader.Module):
             return
         await utils.answer(message, self.strings("wait_text").format(args=args))
         aichat = await aichatos.Running.main("hi")
-        await utils.answer(message, aichat['status'])
+        await utils.answer(
+          message,
+          aichat['status']
+        )

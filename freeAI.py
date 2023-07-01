@@ -29,7 +29,6 @@ class AIMod(loader.Module):
       'args_err' : '❌ you forgot to ask a question.'
     }
     strings_ru = {
-      'name' : 'freeAI',
       'wait_text' : '🕒 ждите...',
       'args_err' : '❌ вы забыли задать вопрос.'
     }

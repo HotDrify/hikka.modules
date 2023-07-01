@@ -17,12 +17,12 @@ from .. import loader, utils
 
 class AIMod(loader.Module):
     strings = {
-      'wait_text' : ' wait...',
-      'args_err' : ' you forgot to ask a question.'
+      'wait_text' : '🕒 wait...',
+      'args_err' : '❌ you forgot to ask a question.'
     }
     strings_ru = {
-      'wait_text' : ' ждите...',
-      'args_err' : ' вы забыли задать вопрос.'
+      'wait_text' : '🕒 ждите...',
+      'args_err' : '❌ вы забыли задать вопрос.'
     }
     
     @loader.unrestricted

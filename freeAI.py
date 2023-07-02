@@ -16,7 +16,7 @@
 # scope: hikka_min 1.2.10
 
 import logging
-from freeAI import mini
+from freeAI import minigpt
 from telethon.tl.types import Message
 # type: ignore
 from telethon.tl.functions.users import GetFullUserRequest

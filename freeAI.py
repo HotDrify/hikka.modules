@@ -51,8 +51,7 @@ class AIMod(loader.Module):
             
             if f'@{user_ent.username}' in message.text:
                 aichat = await aichatos.Running.main(message.text)
-                await utils.reply(
-                  message,
+                await message.reply(
                   aichat['result'][0]['content']
                 )
     @loader.unrestricted

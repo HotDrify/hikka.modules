@@ -16,7 +16,7 @@
 # scope: hikka_min 1.2.10
 
 import logging
-from freeAI import aichatos
+from freeAI import mishalsgpt
 from telethon.tl.types import Message
 # type: ignore
 from telethon.tl.functions.users import GetFullUserRequest
@@ -47,7 +47,7 @@ class AIMod(loader.Module):
         if not reply:
             return
         if reply.from_id == self._tg_id:
-            aichat = await aichatos.Running.main(f'отвечай только на языке автора. (русский или английский) | {message.text}')
+            aichat = await mishalsgpt.Running.main(message.text)
             e = await message.reply(self.strings('wait_text'))
             await e.edit(aichat['result'][0]['content'])
     @loader.unrestricted

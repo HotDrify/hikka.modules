@@ -50,8 +50,7 @@ class AIMod(loader.Module):
             user_ent = user.users[0]
             
             if f'@{user_ent.username}' in message.text:
-                aichat = await aichatos.Running.main(message.text)
-#                await utils.send_message(aichat['result'][0]['content'])
+#                aichat = await aichatos.Running.main(message.text)
                 await message.reply("hi")
     @loader.unrestricted
     async def promptcmd(self, message: Message):

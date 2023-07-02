@@ -43,7 +43,7 @@ class AIMod(loader.Module):
             ),
         )
         
-    @loader.watcher(in=True)
+    @loader.watcher
     async def watcher(self, message):
         sender = await message.get_sender()
         if automsg == 'yes':

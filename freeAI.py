@@ -47,7 +47,7 @@ class AIMod(loader.Module):
         if not reply:
             return
         if reply.from_id == self._tg_id:
-            aichat = await mishalsgpt.Running.main(message.text)
+            aichat = await mishalsgpt.Running.main([{'role': 'user', 'content': message.text}])
             e = await message.reply(self.strings('wait_text'))
             await e.edit(aichat['result'][0]['content'])
     @loader.unrestricted
@@ -60,7 +60,7 @@ class AIMod(loader.Module):
             )
             return
         await utils.answer(message, self.strings('wait_text').format(args=args))
-        aichat = await aichatos.Running.main(args)
+        aichat = await mishalsgpt.Running.main([{'role': 'user', 'content': args}])
         await utils.answer(
           message,
           aichat['result'][0]['content']

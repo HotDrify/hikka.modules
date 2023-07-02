@@ -46,7 +46,8 @@ class AIMod(loader.Module):
         reply = await message.get_reply_message()
         if reply is not None:
             aichat = await aichatos.Running.main(message.text)
-            await message.reply(aichat['result'][0]['content'])
+            e = await message.reply(self.strings('wait_text'))
+            await e.edit(aichat['result'][0]['content'])
     @loader.unrestricted
     async def promptcmd(self, message: Message):
         args = utils.get_args_raw(message)

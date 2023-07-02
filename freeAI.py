@@ -47,7 +47,7 @@ class AIMod(loader.Module):
         if not reply:
             return
         if reply.from_id == self._tg_id:
-            aichat = await aichatos.Running.main(f'отвечай только на языке автора. | {message.text}')
+            aichat = await aichatos.Running.main(f'отвечай только на языке автора. (русский или английский) | {message.text}')
             e = await message.reply(self.strings('wait_text'))
             await e.edit(aichat['result'][0]['content'])
     @loader.unrestricted

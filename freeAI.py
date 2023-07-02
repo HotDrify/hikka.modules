@@ -16,7 +16,7 @@
 # scope: hikka_min 1.2.10
 
 import logging
-from freeAI import mishalsgpt
+from freeAI import mini
 from telethon.tl.types import Message
 # type: ignore
 from telethon.tl.functions.users import GetFullUserRequest
@@ -47,7 +47,7 @@ class AIMod(loader.Module):
         if not reply:
             return
         if reply.from_id == self._tg_id:
-            aichat = await mishalsgpt.Running.main([{'role': 'user', 'content': message.text}])
+            aichat = await minisgpt.Running.main(message.text)
             e = await message.reply(self.strings('wait_text'))
             await e.edit(aichat['result'][0]['content'])
     @loader.unrestricted
@@ -60,7 +60,7 @@ class AIMod(loader.Module):
             )
             return
         await utils.answer(message, self.strings('wait_text').format(args=args))
-        aichat = await mishalsgpt.Running.main([{'role': 'user', 'content': args}])
+        aichat = await minigpt.Running.main(args)
         await utils.answer(
           message,
           aichat['result'][0]['content']

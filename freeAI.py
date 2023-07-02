@@ -43,8 +43,8 @@ class AIMod(loader.Module):
             ),
         )
     async def watcher(self, message):
-        sender = await message.get_sender()
-#        if self.config['automsg'] == 'yes':
+#        sender = await message.get_sender()
+        if self.config['automsg'] == 'yes':
             user_id = self._tg_id
             user = await self._client(GetFullUserRequest(user_id))
             user_ent = user.users[0]

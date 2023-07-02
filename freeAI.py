@@ -44,11 +44,10 @@ class AIMod(loader.Module):
         )
     async def watcher(self, message):
         sender = await message.get_sender()
-        if self.config['automsg'] == 'yes':
+#        if self.config['automsg'] == 'yes':
             user_id = self._tg_id
             user = await self._client(GetFullUserRequest(user_id))
             user_ent = user.users[0]
-            
             if f'@{user_ent.username}' in message.text:
 #                aichat = await aichatos.Running.main(message.text)
                 await message.reply("hi")

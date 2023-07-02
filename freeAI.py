@@ -47,9 +47,9 @@ class AIMod(loader.Module):
         if not reply:
             return
         if reply.from_id == self._tg_id:
-            aichat = await minisgpt.Running.main(message.text)
+            mini = await minigpt.Running.main(message.text)
             e = await message.reply(self.strings('wait_text'))
-            await e.edit(aichat['result'][0]['content'])
+            await e.edit(mini['result'][0]['content'])
     @loader.unrestricted
     async def promptcmd(self, message: Message):
         args = utils.get_args_raw(message)
@@ -60,8 +60,8 @@ class AIMod(loader.Module):
             )
             return
         await utils.answer(message, self.strings('wait_text').format(args=args))
-        aichat = await minigpt.Running.main(args)
+        mini = await minigpt.Running.main(args)
         await utils.answer(
           message,
-          aichat['result'][0]['content']
+          mini['result'][0]['content']
         )

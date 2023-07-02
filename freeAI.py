@@ -42,8 +42,6 @@ class AIMod(loader.Module):
                 lambda: self.strings('_input_text'),
             ),
         )
-        
-    @loader.watcher
     async def watcher(self, message):
         sender = await message.get_sender()
         if automsg == 'yes':

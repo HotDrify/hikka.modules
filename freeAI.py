@@ -42,7 +42,7 @@ class AIMod(loader.Module):
                 'automsg',
                 False,
                 self.strings('_input_text'),
-                validator = loader.validators.Boolean()
+                validator = loader.validators.Boolean(),
             ),
         )
     async def watcher(self, message):

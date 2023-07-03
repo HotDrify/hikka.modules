@@ -27,12 +27,12 @@ from .. import loader, utils
 class AIMod(loader.Module):
     strings = {
       'name' : 'freeAI',
-      '_input_text' : '📌 write yes or no.',
+      '_input_text' : '📌 acts like an answering machine.',
       'wait_text' : '🕒 wait...',
       'args_err' : '❌ you forgot to ask a question.'
     }
     strings_ru = {
-      '_input_text' : '📌 напишите только yes или no.',
+      '_input_text' : '📌 действует по типу "автоответчик".',
       'wait_text' : '🕒 ждите...',
       'args_err' : '❌ вы забыли задать вопрос.'
     }
@@ -40,18 +40,20 @@ class AIMod(loader.Module):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
                 'automsg',
-                'no',
-                lambda: self.strings('_input_text'),
+                False,
+                self.strings('_input_text')
+                validator = loader.validators.Boolean()
             ),
         )
     async def watcher(self, message):
         reply = await message.get_reply_message()
-        if not reply:
-            return
-        if reply.from_id == self._tg_id:
-            mini = await minigpt.Running.main(message.text)
-            e = await message.reply(self.strings('wait_text'))
-            await e.edit(mini['result'][0]['content'])
+        if self.config['automsg'] == True:
+            if not reply:
+                return
+            if reply.from_id == self._tg_id:
+                mini = await minigpt.Running.main(message.text)
+                e = await message.reply(self.strings('wait_text'))
+                await e.edit(mini['result'][0]['content'])
     @loader.unrestricted
     async def promptcmd(self, message: Message):
         args = utils.get_args_raw(message)

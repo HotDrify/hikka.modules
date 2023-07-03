@@ -9,7 +9,7 @@
 # ---------------------------------------------------------------------------------
 #          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
-#          🔒 Licensed under the GNU AGPLv3. | https://www.gnu.org/licenses/agpl-3.0.html
+#                      🔒 Licensed under the GNU AGPLv3.
 #                                 @HotDrify
 # requires: git+https://github.com/HotDrify/freeAI
 # scope: hikka_only
@@ -17,9 +17,11 @@
 
 import logging
 from freeAI import minigpt
+
 from telethon.tl.types import Message
-# type: ignore
 from telethon.tl.functions.users import GetFullUserRequest
+# type: ignore
+
 from .. import loader, utils
 
 class AIMod(loader.Module):

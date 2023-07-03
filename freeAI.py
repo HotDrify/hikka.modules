@@ -51,6 +51,9 @@ class AIMod(loader.Module):
                 validator = loader.validators.Boolean(),
             ),
         )
+    async def client_ready(self, client, db):
+        self._client = client
+        self._db = db
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:

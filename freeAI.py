@@ -45,8 +45,8 @@ class AIMod(loader.Module):
                 validator = loader.validators.Boolean(),
             ),
         )
-    self._channels = self.pointer('blockedChannels', [])
     async def watcher(self, message):
+        self._channels = self.pointer('blockedChannels', [])
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:
             if not reply:

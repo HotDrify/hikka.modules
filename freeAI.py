@@ -6,6 +6,8 @@
 # Author: HotDrify
 # Commands:
 # .prompt
+# .banChat
+# .unbanChannel
 # ---------------------------------------------------------------------------------
 #          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
@@ -29,14 +31,19 @@ class AIMod(loader.Module):
       'name' : 'freeAI',
       '_input_text' : '📌 acts like an answering machine.',
       'wait_text' : '🕒 wait...',
-      'args_err' : '❌ you forgot to ask a question.'
+      'args_err' : '❌ you forgot to ask a question.',
+      'chat_err' : '❌ failed to perform this action. check if this chat is in the list.',
+      'banned_text' : '🖕 chat is blocked.'
     }
     strings_ru = {
       '_input_text' : '📌 действует по типу "автоответчик".',
       'wait_text' : '🕒 ждите...',
-      'args_err' : '❌ вы забыли задать вопрос.'
+      'args_err' : '❌ вы забыли задать вопрос.',
+      'chat_err' : '❌ не удалось выполнить это действие. проверьте, есть ли этот чат в списке.',
+      'banned_text' : '🖕 успешно.'
     }
     def __init__(self):
+        self._channels = self.pointer('blockedChats', [])
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
                 'automsg',
@@ -46,7 +53,6 @@ class AIMod(loader.Module):
             ),
         )
     async def watcher(self, message):
-        self._channels = self.pointer('blockedChannels', [])
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:
             if not reply:
@@ -57,6 +63,20 @@ class AIMod(loader.Module):
                 e = await message.reply(self.strings('wait_text'))
                 mini = await minigpt.Running.main(message.text)
                 await e.edit(mini['result'][0]['content'])
+    @loader.unrestricted
+    async def banChatcmd(self):
+        chat = await event.get_chat()
+        if chat.id in self._channels:
+            await utils.answer(
+              message,
+              self.strings('channel_err')
+            )
+            return
+        await utils.answer(
+          message,
+          self.strings('banned_text')
+        )
+        self._channels.append(chat.id)
     @loader.unrestricted
     async def promptcmd(self, message: Message):
         args = utils.get_args_raw(message)

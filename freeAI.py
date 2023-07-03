@@ -42,7 +42,7 @@ class AIMod(loader.Module):
       'banned_text' : '🖕 успешно.'
     }
     def __init__(self):
-        self._db.set('banChats', [])
+        self.set('banChats', [])
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
                 'automsg',
@@ -65,7 +65,7 @@ class AIMod(loader.Module):
     @loader.unrestricted
     async def banChatcmd(self):
         chat = await event.get_chat()
-        if chat.id in self._db.get('banChats'):
+        if chat.id in self.get('banChats'):
             await utils.answer(
               message,
               self.strings('channel_err')
@@ -75,9 +75,9 @@ class AIMod(loader.Module):
           message,
           self.strings('banned_text')
         )
-        list = self._db.get('banChats')
+        list = self.get('banChats')
         list.append(chat.id)
-        self._db.set('banChats', list)
+        self.set('banChats', list)
         
     @loader.unrestricted
     async def promptcmd(self, message: Message):

@@ -41,7 +41,7 @@ class AIMod(loader.Module):
             loader.ConfigValue(
                 'automsg',
                 False,
-                self.strings('_input_text'),
+                lambda: self.strings('_input_text'),
                 validator = loader.validators.Boolean(),
             ),
         )

@@ -51,8 +51,8 @@ class AIMod(loader.Module):
             if not reply:
                 return
             if reply.from_id == self._tg_id:
-                mini = await minigpt.Running.main(message.text)
                 e = await message.reply(self.strings('wait_text'))
+                mini = await minigpt.Running.main(message.text)
                 await e.edit(mini['result'][0]['content'])
     @loader.unrestricted
     async def promptcmd(self, message: Message):

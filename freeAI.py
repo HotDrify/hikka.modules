@@ -45,12 +45,15 @@ class AIMod(loader.Module):
                 validator = loader.validators.Boolean(),
             ),
         )
+    self._channels = self.pointer('blockedChannels', [])
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:
             if not reply:
                 return
             if reply.from_id == self._tg_id:
+                if reply.peer_id.channel_id in self._channels:
+                    return
                 e = await message.reply(self.strings('wait_text'))
                 mini = await minigpt.Running.main(message.text)
                 await e.edit(mini['result'][0]['content'])

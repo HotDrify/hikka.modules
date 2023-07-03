@@ -42,6 +42,7 @@ class AIMod(loader.Module):
       'banned_text' : '🖕 успешно.'
     }
     def __init__(self):
+        _db = self._db
         self.set('banChats', [])
         self.config = loader.ModuleConfig(
             loader.ConfigValue(

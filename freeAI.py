@@ -8,7 +8,6 @@
 # .prompt
 # .banChat
 # .unbanChat
-# .addword
 # ---------------------------------------------------------------------------------
 #          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
@@ -66,14 +65,10 @@ class AIMod(loader.Module):
         self._db = db
         if not self.get('banWords', False):
             self.set('banWords', [])
-        if not self.get('banChats', False):
-            self.set('banChats', [])
             
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg']:
-            if message.text in self.get('banWords'):
-                await message.reply(self.strings['banWord_text'])
             if message.is_private:
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
@@ -94,23 +89,6 @@ class AIMod(loader.Module):
                 if not self.config['waitText']:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
-    
-    @loader.unrestricted
-    async def addwordcmd(self, message: Message):
-        args = utils.get_args_raw(message)
-        if not args:
-            await message.answer(
-              message,
-              self.strings('args_err')
-            )
-            return
-        await utils.answer(
-          message,
-          self.strings('banned_text')
-        )
-        list = self.get('banWords')
-        list.append(message.text)
-        self.set('banWords', list)
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
         """

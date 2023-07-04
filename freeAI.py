@@ -51,6 +51,7 @@ class AIMod(loader.Module):
                 validator = loader.validators.Boolean(),
             ),
         )
+        
     async def client_ready(self, client, db):
         self._client = client
         self._db = db
@@ -60,6 +61,10 @@ class AIMod(loader.Module):
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:
+            if message.is_private:
+                e = await message.reply(self.strings('wait_text'))
+                mini = await minigpt.Running.main(message.text)
+                await e.edit(mini['result'][0]['content'])
             if not reply:
                 return
             if reply.from_id == self._tg_id:

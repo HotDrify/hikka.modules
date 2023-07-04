@@ -61,7 +61,7 @@ class AIMod(loader.Module):
             if not reply:
                 return
             if reply.from_id == self._tg_id:
-                if reply.peer_id.channel_id in self._channels:
+                if reply.peer_id.channel_id in self.get('banChats'):
                     return
                 e = await message.reply(self.strings('wait_text'))
                 mini = await minigpt.Running.main(message.text)

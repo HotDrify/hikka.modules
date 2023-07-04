@@ -72,7 +72,7 @@ class AIMod(loader.Module):
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg']:
-            if message text in self.get('banWords'):
+            if message.text in self.get('banWords'):
                 await message.reply(self.strings['banWord_text'])
             if message.is_private:
                 if self.config['waitText']:

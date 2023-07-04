@@ -8,6 +8,7 @@
 # .prompt
 # .banChat
 # .unbanChat
+# .addword
 # ---------------------------------------------------------------------------------
 #          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
@@ -29,16 +30,18 @@ from .. import loader, utils
 class AIMod(loader.Module):
     strings = {
       'name' : 'freeAI',
+      'banWord_text' : '❌ Your request contains forbidden text',
       'automsg_text' : '📌 acts like an answering machine.',
       'wait_text' : '🕒 wait...',
-      'args_err' : '❌ you forgot to ask a question.',
+      'args_err' : '❌ you forgot to enter arguments',
       'chat_err' : '❌ failed to perform this action. check if this chat is in the list.',
       'banned_text' : '🖕 chat is blocked.'
     }
     strings_ru = {
       'automsg_text' : '📌 действует по типу "автоответчик".',
+      'banWord_text' : '❌ в твоём запросе есть запрещённый текст',
       'wait_text' : '🕒 ждите...',
-      'args_err' : '❌ вы забыли задать вопрос.',
+      'args_err' : '❌ вы забыли ввести аргументы.',
       'chat_err' : '❌ не удалось выполнить это действие. проверьте, есть ли этот чат в списке.',
       'banned_text' : '🖕 успешно.'
     }
@@ -61,12 +64,16 @@ class AIMod(loader.Module):
     async def client_ready(self, client, db):
         self._client = client
         self._db = db
+        if not self.get('banWords', False):
+            self.set('banWords', [])
         if not self.get('banChats', False):
             self.set('banChats', [])
             
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg']:
+            if self.get('banWords') in message.text:
+                await message.reply(self.strings['banWord_text'])
             if message.is_private:
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
@@ -87,6 +94,23 @@ class AIMod(loader.Module):
                 if not self.config['waitText']:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
+    
+    @loader.unrestricted
+    async def addwordcmd(self, message: Message):
+        args = utils.get_args_raw(message)
+        if not args:
+            await message.answer(
+              message,
+              self.strings('args_err')
+            )
+            return
+        await utils.answer(
+          message,
+          self.strings('banned_text')
+        )
+        list = self.get('banWords')
+        list.append(message.text)
+        self.set('banWords', list)
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
         """

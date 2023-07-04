@@ -72,7 +72,7 @@ class AIMod(loader.Module):
                     msg = await message.reply(strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await msg.edit(mini['result'][0]['content'])
-                else:
+                if not self.config['waitText']:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
             if not reply:
@@ -84,7 +84,7 @@ class AIMod(loader.Module):
                     msg = await message.reply(strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await msg.edit(mini['result'][0]['content'])
-                else:
+                if not self.config['waitText']:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
     @loader.unrestricted

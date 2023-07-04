@@ -47,7 +47,7 @@ class AIMod(loader.Module):
             loader.ConfigValue(
                 'waitText',
                 True,
-                lambda: self.strings('_input_text'),
+                lambda: self.strings('wait_text'),
                 validator = loader.validators.Boolean(),
             ),
             loader.ConfigValue(

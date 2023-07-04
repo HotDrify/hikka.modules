@@ -69,6 +69,9 @@ class AIMod(loader.Module):
                 await e.edit(mini['result'][0]['content'])
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
+        """
+        снять кляп жизни.
+        """
         chat = await message.get_chat()
         if chat.id not in self.get('banChats'):
             await utils.answer(
@@ -85,6 +88,9 @@ class AIMod(loader.Module):
         self.set('banChats', list)
     @loader.unrestricted
     async def banChatcmd(self, message: Message):
+        """
+        бот не будет реагировать на сообщения данного чата.
+        """
         chat = await message.get_chat()
         if chat.id in self.get('banChats'):
             await utils.answer(
@@ -102,6 +108,9 @@ class AIMod(loader.Module):
         
     @loader.unrestricted
     async def promptcmd(self, message: Message):
+        """
+        задать вопрос.
+        """
         args = utils.get_args_raw(message)
         if not args:
             await utils.answer(

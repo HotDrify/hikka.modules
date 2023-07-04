@@ -47,7 +47,7 @@ class AIMod(loader.Module):
             loader.ConfigValue(
                 'waitText',
                 True,
-                lambda: self.strings('wait_text'),
+                lambda: self.strings('wait._text'),
                 validator = loader.validators.Boolean(),
             ),
             loader.ConfigValue(
@@ -66,19 +66,27 @@ class AIMod(loader.Module):
             
     async def watcher(self, message):
         reply = await message.get_reply_message()
-        if self.config['automsg'] == True:
+        if self.config['automsg']:
             if message.is_private:
-                e = await message.reply(self.strings('wait_text'))
-                mini = await minigpt.Running.main(message.text)
-                await e.edit(mini['result'][0]['content'])
+                if self.config['waitText']:
+                    msg = await message.reply(strings['wait_text'])
+                    mini = await minigpt.Running.main(message.text)
+                    await msg.edit(mini['result'][0]['content'])
+                else:
+                    mini = await minigpt.Running.main(message.text)
+                    await message.reply(mini['result'][0]['content'])
             if not reply:
                 return
             if reply.from_id == self._tg_id:
                 if reply.peer_id.channel_id in self.get('banChats'):
                     return
-                e = await message.reply(self.strings('wait_text'))
-                mini = await minigpt.Running.main(message.text)
-                await e.edit(mini['result'][0]['content'])
+                if self.config['waitText']:
+                    msg = await message.reply(strings['wait_text'])
+                    mini = await minigpt.Running.main(message.text)
+                    await msg.edit(mini['result'][0]['content'])
+                else:
+                    mini = await minigpt.Running.main(message.text)
+                    await message.reply(mini['result'][0]['content'])
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
         """

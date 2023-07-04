@@ -29,14 +29,14 @@ from .. import loader, utils
 class AIMod(loader.Module):
     strings = {
       'name' : 'freeAI',
-      '_input_text' : '📌 acts like an answering machine.',
+      'automsg_text' : '📌 acts like an answering machine.',
       'wait_text' : '🕒 wait...',
       'args_err' : '❌ you forgot to ask a question.',
       'chat_err' : '❌ failed to perform this action. check if this chat is in the list.',
       'banned_text' : '🖕 chat is blocked.'
     }
     strings_ru = {
-      '_input_text' : '📌 действует по типу "автоответчик".',
+      'automsg_text' : '📌 действует по типу "автоответчик".',
       'wait_text' : '🕒 ждите...',
       'args_err' : '❌ вы забыли задать вопрос.',
       'chat_err' : '❌ не удалось выполнить это действие. проверьте, есть ли этот чат в списке.',
@@ -45,9 +45,15 @@ class AIMod(loader.Module):
     def __init__(self):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
+                'waitText',
+                True,
+                lambda: self.strings('_input_text'),
+                validator = loader.validators.Boolean(),
+            ),
+            loader.ConfigValue(
                 'automsg',
                 False,
-                lambda: self.strings('_input_text'),
+                lambda: self.strings('automsg_text'),
                 validator = loader.validators.Boolean(),
             ),
         )

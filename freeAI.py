@@ -69,7 +69,7 @@ class AIMod(loader.Module):
     @loader.unrestricted
     async def banChatcmd(self, message):
         chat = await message.get_chat()
-        if chat.id in self.get('banChats'):
+        if chat.id in self.db['banChats']:
             await utils.answer(
               message,
               self.strings('channel_err')

@@ -56,6 +56,7 @@ class AIMod(loader.Module):
         self._db = db
         if not self.get('banChats', False):
             self.set('banChats', [])
+            
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:

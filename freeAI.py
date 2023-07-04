@@ -67,7 +67,7 @@ class AIMod(loader.Module):
                 mini = await minigpt.Running.main(message.text)
                 await e.edit(mini['result'][0]['content'])
     @loader.unrestricted
-    async def banChatcmd(self, message):
+    async def banChatcmd(self, message: Message):
         chat = await message.get_chat()
         if chat.id in self.get('banChats'):
             await utils.answer(

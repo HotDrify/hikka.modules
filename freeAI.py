@@ -7,6 +7,7 @@
 # Commands:
 # .prompt
 # .banChat
+# .unbanChat
 # ---------------------------------------------------------------------------------
 #          █░█ █▀█ ▀█▀ █▀▄ █▀█ █ █▀▀ █▄█ ░ █░█ █ █▄▀ █▄▀ ▄▀█
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
@@ -66,6 +67,22 @@ class AIMod(loader.Module):
                 e = await message.reply(self.strings('wait_text'))
                 mini = await minigpt.Running.main(message.text)
                 await e.edit(mini['result'][0]['content'])
+    @loader.unrestricted
+    async def unbanChatcmd(self, message: Message):
+        chat = await message.get_chat()
+        if chat.id not in self.get('banChats'):
+            await utils.answer(
+              message,
+              self.strings('chat_err')
+            )
+            return
+        await utils.answer(
+          message,
+          self.strings('banned_text')
+        )
+        list = self.get('banChats')
+        list.remove(chat.id)
+        self.set('banChats', list)
     @loader.unrestricted
     async def banChatcmd(self, message: Message):
         chat = await message.get_chat()

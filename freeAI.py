@@ -69,7 +69,7 @@ class AIMod(loader.Module):
         if self.config['automsg']:
             if message.is_private:
                 if self.config['waitText']:
-                    repl = await message.reply(strings['wait_text'])
+                    repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await repl.edit(mini['result'][0]['content'])
                 if not self.config['waitText']:
@@ -81,7 +81,7 @@ class AIMod(loader.Module):
                 if reply.peer_id.channel_id in self.get('banChats'):
                     return
                 if self.config['waitText']:
-                    repl = await message.reply(strings['wait_text'])
+                    repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await repl.edit(mini['result'][0]['content'])
                 if not self.config['waitText']:

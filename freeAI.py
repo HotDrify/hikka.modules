@@ -42,7 +42,6 @@ class AIMod(loader.Module):
       'banned_text' : '🖕 успешно.'
     }
     def __init__(self):
-        self.set('banChats', [])
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
                 'automsg',
@@ -54,6 +53,8 @@ class AIMod(loader.Module):
     async def client_ready(self, client, db):
         self._client = client
         self._db = db
+        if not self.get('banChats', False):
+            self.set('banChats', [])
     async def watcher(self, message):
         reply = await message.get_reply_message()
         if self.config['automsg'] == True:

@@ -72,7 +72,7 @@ class AIMod(loader.Module):
         if chat.id in self.get('banChats'):
             await utils.answer(
               message,
-              self.strings('channel_err')
+              self.strings('chat_err')
             )
             return
         await utils.answer(

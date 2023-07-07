@@ -63,8 +63,8 @@ class AIMod(loader.Module):
     async def client_ready(self, client, db):
         self._client = client
         self._db = db
-        if not self.get('banWords', False):
-            self.set('banWords', [])
+        if not self.get('banChats', False):
+            self.set('banChats', [])
             
     async def watcher(self, message):
         reply = await message.get_reply_message()
@@ -74,7 +74,7 @@ class AIMod(loader.Module):
                     repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await repl.edit(mini['result'][0]['content'])
-                if not self.config['waitText']:
+                else:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
             if not reply:
@@ -86,7 +86,7 @@ class AIMod(loader.Module):
                     repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Running.main(message.text)
                     await repl.edit(mini['result'][0]['content'])
-                if not self.config['waitText']:
+                else:
                     mini = await minigpt.Running.main(message.text)
                     await message.reply(mini['result'][0]['content'])
     @loader.unrestricted

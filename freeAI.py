@@ -72,10 +72,10 @@ class AIMod(loader.Module):
             if message.is_private:
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
-                    mini = await minigpt.Running.main(message.text)
+                    mini = await minigpt.Completion.acreate(message.text)
                     await repl.edit(mini['result'][0]['content'])
                 else:
-                    mini = await minigpt.Running.main(message.text)
+                    mini = await minigpt.Completion.acreate(message.text)
                     await message.reply(mini['result'][0]['content'])
             if not reply:
                 return
@@ -84,10 +84,10 @@ class AIMod(loader.Module):
                     return
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
-                    mini = await minigpt.Running.main(message.text)
+                    mini = await minigpt.Completion.acreate(message.text)
                     await repl.edit(mini['result'][0]['content'])
                 else:
-                    mini = await minigpt.Running.main(message.text)
+                    mini = await minigpt.Completion.acreate(message.text)
                     await message.reply(mini['result'][0]['content'])
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
@@ -141,7 +141,7 @@ class AIMod(loader.Module):
             )
             return
         await utils.answer(message, self.strings('wait_text').format(args=args))
-        mini = await minigpt.Running.main(args)
+        mini = await minigpt.Completion.acreate(args)
         await utils.answer(
           message,
           mini['result'][0]['content']

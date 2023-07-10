@@ -132,14 +132,14 @@ class FiltersMod(loader.Module):
             filters = self.db.get("Filters", "filters", {})
             onlyin = self.db.get("Filters", "onlyin", [])
             chatid = str(message.chat_id)
-            fromid = str(message.for_id)
+            fromid = str(message.from_id)
             m = message.text.lower()
             if onlyin not in []:
                 if fromid not in onlyin:
                     return
             if chatid not in filters:
                 return
-
+                
             for _ in filters[chatid]:
                 msg = await self.db.fetch_asset(filters[chatid][_])
                 def_pref = self.db.get("friendly-telegram.main", "command_prefix")

@@ -36,7 +36,8 @@ class FiltersMod(loader.Module):
         if fromid not in onlyin:
             onlyin.append(fromid)
             self.db.set("Filters", "onlyin", onlyin)
-        if fromid in 
+        if fromid in onlyin:
+            return await message.edit("<b>has already.</b>")
     async def filtercmd(self, message):
         """Adds a filter into the list."""
         filters = self.db.get("Filters", "filters", {})

@@ -30,7 +30,7 @@ class FiltersMod(loader.Module):
     async def onlyincmd(self, message):
         onlyin = self.db.get("Filters", "onlyin", [])
         reply = await message.get_reply_message()
-        fromid = str(reply.for_id)
+        fromid = str(reply.from_id)
         if not reply:
             return await message.edit("<b>No reply.</b>")
         if fromid not in onlyin:

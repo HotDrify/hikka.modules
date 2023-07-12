@@ -73,10 +73,10 @@ class AIMod(loader.Module):
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Completion.acreate(message.text)
-                    await repl.edit(mini['result'][0]['content'])
+                    await repl.edit(mini['choices'][0]['message']['content'])
                 else:
                     mini = await minigpt.Completion.acreate(message.text)
-                    await message.reply(mini['result'][0]['content'])
+                    await message.reply(mini['choices'][0]['message']['content'])
             if not reply:
                 return
             if reply.from_id == self._tg_id:
@@ -85,10 +85,10 @@ class AIMod(loader.Module):
                 if self.config['waitText']:
                     repl = await message.reply(self.strings['wait_text'])
                     mini = await minigpt.Completion.acreate(message.text)
-                    await repl.edit(mini['result'][0]['content'])
+                    await repl.edit(mini['choices'][0]['message']['content'])
                 else:
                     mini = await minigpt.Completion.acreate(message.text)
-                    await message.reply(mini['result'][0]['content'])
+                    await message.reply(mini['choices'][0]['message']['content'])
     @loader.unrestricted
     async def unbanChatcmd(self, message: Message):
         """
@@ -144,5 +144,5 @@ class AIMod(loader.Module):
         mini = await minigpt.Completion.acreate(args)
         await utils.answer(
           message,
-          mini['result'][0]['content']
+          mini['choices'][0]['message']['content']
         )

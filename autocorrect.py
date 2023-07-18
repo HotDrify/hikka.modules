@@ -29,7 +29,7 @@ class autoCorrectMod(loader.Module):
       "lang": "📌 язык"
     }
     
-    async def __init__(self):
+    def __init__(self):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
               "lang",

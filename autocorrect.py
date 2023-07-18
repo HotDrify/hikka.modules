@@ -33,7 +33,7 @@ class autoCorrectMod(loader.Module):
           loader.ConfigValue(
             "lang",
             "ru",
-            validator=loader.validators.MultiChoice(["ru", "en"]),
+            validator = loader.validators.MultiChoice(["ru", "en"]),
           ),
           loader.ConfigValue(
             "statusWork",

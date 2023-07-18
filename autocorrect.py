@@ -61,4 +61,6 @@ class autoCorrectMod(loader.Module):
         ctext = message.text
         for mistake in data:
             ctext = ctext[:mistake['pos']] + mistake['s'][0] + ctext[mistake['pos']+mistake['len']:]
-        await message.edit(ctext)
+        
+        if message.text != ctext:
+            await message.edit(ctext)

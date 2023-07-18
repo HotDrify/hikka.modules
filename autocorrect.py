@@ -25,21 +25,23 @@ class autoCorrectMod(loader.Module):
     
     strings = {
       "name": "autoCorrect",
-      "status": "📌 включение и выключение автозамены."
+      "status": "📌 включение и выключение автозамены.",
+      "lang": "📌 язык"
     }
     
     async def __init__(self):
         self.config = loader.ModuleConfig(
-          loader.ConfigValue(
-            "lang",
-            "ru",
-            validator = loader.validators.MultiChoice(["ru", "en"]),
+            loader.ConfigValue(
+              "lang",
+              "ru",
+              lambda: self.strings["lang"],
+              validator = loader.validators.MultiChoice(["ru", "en"]),
           ),
           loader.ConfigValue(
-            "statusWork",
-            True,
-            lambda: self.strings["status"],
-            validator = loader.validators.Boolean(),
+              "statusWork",
+              True,
+              lambda: self.strings["status"],
+              validator = loader.validators.Boolean(),
           ),
         )
 

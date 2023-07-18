@@ -35,7 +35,7 @@ class autoCorrectMod(loader.Module):
               "lang",
               "ru",
               lambda: self.strings["lang"],
-              validator = loader.validators.MultiChoice(["ru", "en"]),
+              validator = loader.validators.Choice(["ru", "en"]),
           ),
           loader.ConfigValue(
               "statusWork",

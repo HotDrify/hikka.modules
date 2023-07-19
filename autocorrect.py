@@ -16,6 +16,7 @@ from .. import loader, utils
 import logging
 
 import requests
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -28,11 +29,25 @@ class autoCorrectMod(loader.Module):
       "status": "📌 включение и выключение автозамены.",
       "lang": "📌 язык",
       "link": "📌 не даст изменить сообщение с ссылкой.",
-      "slash": "📌 не даст изменить сообщение с слеш командой (/)."
+      "slash": "📌 не даст изменить сообщение с слеш командой (/).",
+      "api_base": "🛠️ (эта функция только для создателя, не знаешь, не трогай!) позволяет изменить API_BASE.",
+      "api_params": "🛠️ (эта функция только для создателя, не знаешь, не трогай!) %text% - text, %lang% - lang. позволяет изменить API_PARAMS."
     }
     
     def __init__(self):
         self.config = loader.ModuleConfig(
+            loader.ConfigValue(
+              "api_params",
+              '{"text": %text%, "lang": %lang%, "options": 512}',
+              lambda: self.strings["api_params"],
+              validator = loader.validators.String(),
+            ),
+            loader.ConfigValue(
+              "api_base",
+              'https://speller.yandex.net/services/spellservice.json/checkText',
+              lambda: self.strings["api_base"],
+              validator = loader.validators.Link(),
+            ),
             loader.ConfigValue(
               "is_slash",
               True,
@@ -71,14 +86,12 @@ class autoCorrectMod(loader.Module):
         if self.config["is_link"]:
             if "https" in message.text or "http" in message.text:
                 return
-                
+        
+        json_data = json.loads(self.config["api_params"].replace("%text%", message.text).replace("%lang%", self.config["lang"]))
+        
         response = requests.get(
-          "https://speller.yandex.net/services/spellservice.json/checkText",
-          params = {
-            'text': message.text,
-            'lang': self.config['lang'],
-            'options': 512
-          }
+          self.config["api_base"],
+          params = json_data
         )
         
         data = response.json()

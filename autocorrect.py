@@ -63,6 +63,11 @@ class autoCorrectMod(loader.Module):
     async def watcher(self, message):
         if not self.config["status_work"]:
             return
+        
+        if self.config["is_slash"]:
+            if "/" in message.text:
+                return
+        
         if self.config["is_link"]:
             if "https" in message.text or "http" in message.text:
                 return

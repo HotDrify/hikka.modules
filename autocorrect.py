@@ -38,7 +38,7 @@ class autoCorrectMod(loader.Module):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
               "api_params",
-              '{"text": %text%, "lang": %lang%, "options": 512}',
+              '{"text": "%text%", "lang": "%lang%, "options": 512}',
               lambda: self.strings["api_params"],
               validator = loader.validators.String(),
             ),

@@ -32,8 +32,6 @@ class autoCorrectMod(loader.Module):
     }
     
     def __init__(self):
-        self.links = ["https", "http"]
-        
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
               "is_slash",
@@ -65,9 +63,8 @@ class autoCorrectMod(loader.Module):
     async def watcher(self, message):
         if not self.config["status_work"]:
             return
-            
         if self.config["is_link"]:
-            if self.links in message.text:
+            if "https" in message.text or "http" in message.text:
                 return
                 
         response = requests.get(

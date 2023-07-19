@@ -27,7 +27,8 @@ class autoCorrectMod(loader.Module):
       "name": "autoCorrect",
       "status": "📌 включение и выключение автозамены.",
       "lang": "📌 язык",
-      "link": "📌 не даст изменить сообщение с ссылкой."
+      "link": "📌 не даст изменить сообщение с ссылкой.",
+      "slash": "📌 не даст изменить сообщение с слеш командой (/)."
     }
     
     def __init__(self):
@@ -35,9 +36,16 @@ class autoCorrectMod(loader.Module):
         
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
+              "is_slash",
+              True,
+              lambda: self.strings["slash"],
+              validator = loader.validators.Boolean(),
+            ),
+            loader.ConfigValue(
               "is_link",
               True,
               lambda: self.strings["link"],
+              validator = loader.validators.Boolean(),
             ),
             loader.ConfigValue(
               "lang",

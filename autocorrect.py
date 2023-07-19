@@ -26,11 +26,19 @@ class autoCorrectMod(loader.Module):
     strings = {
       "name": "autoCorrect",
       "status": "📌 включение и выключение автозамены.",
-      "lang": "📌 язык"
+      "lang": "📌 язык",
+      "link": "📌 не даст изменить сообщение с ссылкой."
     }
     
     def __init__(self):
+        self.links = ["https", "http"]
+        
         self.config = loader.ModuleConfig(
+            loader.ConfigValue(
+              "is_link",
+              True,
+              lambda: self.strings["link"],
+            ),
             loader.ConfigValue(
               "lang",
               "ru",
@@ -38,7 +46,7 @@ class autoCorrectMod(loader.Module):
               validator = loader.validators.Choice(["ru", "en"]),
           ),
           loader.ConfigValue(
-              "statusWork",
+              "status_work",
               True,
               lambda: self.strings["status"],
               validator = loader.validators.Boolean(),
@@ -47,8 +55,13 @@ class autoCorrectMod(loader.Module):
 
     @loader.tag("only_messages", "no_commands", "out")
     async def watcher(self, message):
-        if not self.config["statusWork"]:
+        if not self.config["status_work"]:
             return
+            
+        if self.config["is_link"]:
+            if self.links in message.text:
+                return
+                
         response = requests.get(
           "https://speller.yandex.net/services/spellservice.json/checkText",
           params = {
@@ -57,8 +70,10 @@ class autoCorrectMod(loader.Module):
             'options': 512
           }
         )
+        
         data = response.json()
         ctext = message.text
+        
         for mistake in data:
             ctext = ctext[:mistake['pos']] + mistake['s'][0] + ctext[mistake['pos']+mistake['len']:]
         

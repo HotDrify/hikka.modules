@@ -37,12 +37,6 @@ class autoCorrectMod(loader.Module):
     def __init__(self):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
-              "api_params",
-              '{"text": "%text%", "lang": "%lang%", "options": 512}',
-              lambda: self.strings["api_params"],
-              validator = loader.validators.String(),
-            ),
-            loader.ConfigValue(
               "api_base",
               'https://speller.yandex.net/services/spellservice.json/checkText',
               lambda: self.strings["api_base"],
@@ -86,12 +80,14 @@ class autoCorrectMod(loader.Module):
         if self.config["is_link"]:
             if "https" in message.text or "http" in message.text:
                 return
-        
-        json_data = json.loads(self.config["api_params"].replace("%text%", message.text).replace("%lang%", self.config["lang"]))
-        
+                
         response = requests.get(
           self.config["api_base"],
-          params = json_data
+          params = {
+            'text': message.text,
+            'lang': self.config['lang'],
+            'options': 512
+          }
         )
         
         data = response.json()

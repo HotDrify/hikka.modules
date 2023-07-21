@@ -28,14 +28,19 @@ class autoCorrectMod(loader.Module):
       "name": "autoCorrect",
       "status": "📌 включение и выключение автозамены.",
       "lang": "📌 язык",
-      "link": "📌 не даст изменить сообщение с ссылкой.",
-      "slash": "📌 не даст изменить сообщение с слеш командой (/).",
+      "link": "📌 если включен: не даст изменить сообщение с ссылкой.",
+      "slash": "📌 если включен: не даст изменить сообщение с слеш командой (/).",
       "api_base": "🛠️ (эта функция только для создателя, не знаешь, не трогай!) позволяет изменить API_BASE.",
-      "api_params": "🛠️ (эта функция только для создателя, не знаешь, не трогай!) %text% - text, %lang% - lang. позволяет изменить API_PARAMS."
+      "ping": "📌 если включен: не даст изменить сообщение с упоминанием (@)"
     }
     
     def __init__(self):
         self.config = loader.ModuleConfig(
+            loader.ConfigValue(
+              "is_ping",
+              True,
+              lambda: self.strings["ping"],
+            ),
             loader.ConfigValue(
               "api_base",
               'https://speller.yandex.net/services/spellservice.json/checkText',
@@ -72,6 +77,10 @@ class autoCorrectMod(loader.Module):
     async def watcher(self, message):
         if not self.config["status_work"]:
             return
+        
+        if self.config["is_ping"]:
+            if "@" in message.text:
+                return
         
         if self.config["is_slash"]:
             if "/" in message.text:

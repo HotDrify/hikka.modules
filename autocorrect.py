@@ -9,9 +9,6 @@
 #          █▀█ █▄█ ░█░ █▄▀ █▀▄ █ █▀░ ░█░ ▄ █▀█ █ █░█ █░█ █▀█
 #                      🔒 Licensed under the GNU AGPLv3.
 #                                 @HotDrify
-# scope: hikka_only
-# scope: hikka_min 1.2.10
-
 from .. import loader, utils
 import logging
 

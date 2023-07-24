@@ -41,7 +41,7 @@ class FiltersMod(loader.Module):
         """Adds a filter into the list."""
         filters = self.db.get("Filters", "filters", {})
         reply = await message.get_reply_message()
-        key = utils.get_args_raw(message).lower().replace("%id%", reply.from_id).replace("%username%", await client(GetFullUserRequest(reply.from_id))
+        key = utils.get_args_raw(message).lower()
         chatid = str(message.chat_id)
         
         if not key and not reply:

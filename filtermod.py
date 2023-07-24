@@ -16,7 +16,7 @@
 # Module author: @ftgmodulesbyfl1yd (edited by HotDrify)
 
 from .. import loader, utils
-
+from telethon.tl.functions.users import GetFullUserRequest
 
 @loader.tds
 class FiltersMod(loader.Module):
@@ -40,8 +40,8 @@ class FiltersMod(loader.Module):
     async def filtercmd(self, message):
         """Adds a filter into the list."""
         filters = self.db.get("Filters", "filters", {})
-        key = utils.get_args_raw(message).lower()
         reply = await message.get_reply_message()
+        key = utils.get_args_raw(message).lower().replace("%id%", reply.from_id).replace("%username%", await client(GetFullUserRequest(reply.from_id))
         chatid = str(message.chat_id)
         
         if not key and not reply:

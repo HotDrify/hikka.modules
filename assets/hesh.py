@@ -13,6 +13,7 @@ async def get(ip, port):
         while True:
             async with session.get(f"http://{ip}:{port}") as response:
                 await response.read()
+            logger.warning("ok")
             await asyncio.sleep(0.2)
 
 async def main():

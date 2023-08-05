@@ -1,6 +1,6 @@
 {
     "site": "https://mipoh.ru",
-    "port": "443",
-    "type": "GET",
+    "port": 443,
+    "type": "socket",
     "message": "you're under attack with a HIKKA-botnet!"
 }

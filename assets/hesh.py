@@ -24,5 +24,3 @@ async def main():
 
     if type == "GET":
         await get(ip, port)
-
-asyncio.run(main())

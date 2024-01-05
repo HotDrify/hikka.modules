@@ -17,7 +17,8 @@ class HikkaEditorMod(loader.Module):
     strings = {
         'name': 'Hikka-Editor',
         'editing': '⏳ <b>Редактирую...</b>',
-        'edited': '✅ <b>Готово!</b>'
+        'edited': '✅ <b>Готово!</b>',
+        'notfound': '<b>❌ Не найдено!</b>'
     }
 
     def __init__(self):
@@ -40,30 +41,11 @@ class HikkaEditorMod(loader.Module):
 
     @loader.command()
     async def edituptimecmd(self, message: Message):
-        """📦 Изменяет время запуска. (e: 1y 205d 10:12:35)"""
         args = utils.get_args_raw(message)
         await utils.answer(message, self.strings["editing"])
+
+        def platform():
+            return args
         
-        time_components = args.split(" ")
-        date_components = time_components[:-1]
-        time_component = time_components[-1]
-        duration = datetime.timedelta(*[
-            int(x[:-1]) * (365 if x.endswith("y") else 1)
-            if x[-1] in ["y", "d"]
-            else int(x)
-            for x in date_components
-        ])
-
-        current_datetime = datetime.datetime.now()
-        future_datetime = current_datetime + duration
-        time_list = [int(x) for x in time_component.split(":")]
-        time = datetime.time(*time_list)
-        future_datetime_with_time = datetime.datetime.combine(future_datetime.date(), time)
-
-        timestamp = future_datetime_with_time.timestamp()
-
-        utils.init_ts = timestamp
-        
+        utils.get_named_platform = platform
         await utils.answer(message, self.strings["edited"])
-        
-        

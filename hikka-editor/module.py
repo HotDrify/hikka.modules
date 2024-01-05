@@ -31,7 +31,7 @@ class HikkaEditorMod(loader.Module):
             )
         )
 
-    async def client_ready(self, db):
+    async def client_ready(self, client, db):
         self.db = db
 
     @loader.command()

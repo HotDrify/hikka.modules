@@ -15,7 +15,8 @@ import re
 class HikkaEditorMod(loader.Module):
     """Hikka strings editor"""
     strings = {
-        'name': 'Hikka-Editor'
+        'name': 'Hikka-Editor',
+        'edited': '✅ <b>Готово!</b>'
     }
 
     def __init__(self):
@@ -33,6 +34,6 @@ class HikkaEditorMod(loader.Module):
         """📦 Изменяет версию Hikka."""
         args = utils.get_args_raw(message)
         version.__version__ = tuple(map(int, args.split(".")))
-        await utils.answer(message, "готово!")
+        await utils.answer(message, self.strings["edited"])
         
     

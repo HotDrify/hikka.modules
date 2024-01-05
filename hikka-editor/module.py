@@ -59,6 +59,6 @@ class HikkaEditorMod(loader.Module):
         """📦 Изменяет период бекапа (в минутах.)."""
         args = utils.get_args_raw(message)
         await utils.answer(message, self.strings["editing"])
-        db.set("HikkaBackupMod", "period", int(args) * 60)
+        self.db.set("HikkaBackupMod", "period", int(args) * 60)
         await utils.answer(message, self.strings["edited"])
 

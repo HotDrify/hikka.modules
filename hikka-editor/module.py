@@ -31,8 +31,11 @@ class HikkaEditorMod(loader.Module):
             )
         )
 
+    async def client_ready(self, db):
+        self.db = db
+
     @loader.command()
-    async def editversioncmd(self, message: Message):
+    async def editversion(self, message: Message):
         """📦 Изменяет версию Hikka."""
         args = utils.get_args_raw(message)
         await utils.answer(message, self.strings["editing"])
@@ -40,7 +43,8 @@ class HikkaEditorMod(loader.Module):
         await utils.answer(message, self.strings["edited"])
 
     @loader.command()
-    async def edituptimecmd(self, message: Message):
+    async def editplatform(self, message: Message):
+        """📦 Изменяет платформу на котророй стоит Hikka."""
         args = utils.get_args_raw(message)
         await utils.answer(message, self.strings["editing"])
 
@@ -49,3 +53,12 @@ class HikkaEditorMod(loader.Module):
         
         utils.get_named_platform = platform
         await utils.answer(message, self.strings["edited"])
+
+    @loader.command()
+    async def setbperiod(self, message: Message):
+        """📦 Изменяет период бекапа (в минутах.)."""
+        args = utils.get_args_raw(message)
+        await utils.answer(message, self.strings["editing"])
+        db.set("HikkaBackupMod", "period", int(args))
+        await utils.answer(message, self.strings["edited"])
+

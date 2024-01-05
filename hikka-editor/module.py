@@ -29,7 +29,7 @@ class HikkaEditorMod(loader.Module):
         )
 
     @loader.command()
-    async def modinfocmd(self, message: Message):
+    async def editversioncmd(self, message: Message):
         """📦 Изменяет версию Hikka."""
         args = utils.get_args_raw(message)
         version.__version__ = tuple(map(int, args.split(".")))
